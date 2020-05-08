@@ -12,7 +12,9 @@
                     <b-button size="sm" class="my-2 my-sm-0" type="submit">Buscar</b-button>
         </b-nav-form>-->
         <b-nav-item v-if="true">
-          <b-button size="sm" variant="outline-info" to="/register">Registrarse</b-button>
+          <b-button size="sm" variant="outline-info" to="/register"
+            >Registrarse</b-button
+          >
         </b-nav-item>
         <b-nav-item v-if="true">
           <b-button size="sm" variant="info" to="/login">Ingresar</b-button>
@@ -44,8 +46,8 @@
 
 <script lang="ts">
 // import { mapState, mapActions } from "vuex";
-import IconifyIcon from '@iconify/vue';
-import cart from '@iconify/icons-mdi/cart';
+import IconifyIcon from '@iconify/vue'
+import cart from '@iconify/icons-mdi/cart'
 
 export default {
   name: 'Navbar',
@@ -60,11 +62,11 @@ export default {
   data() {
     return {
       icons: {
-        cart: cart,
-      },
-    };
+        cart: cart
+      }
+    }
   }
-};
+}
 </script>
 
 <style scoped>
