@@ -1,12 +1,11 @@
 language: node_js
-node_js: 
-  node:latest
+node_js: node:latest
 before_install:
   - echo "||| Instalar dependencias |||"
 install:
   - npm install
 deploy:
   provider: heroku
-  api_key: 
+  api_key:
     secure: 1bfc7b8d-b772-4265-a4c9-693952e0a326
   app: abastify-fe
