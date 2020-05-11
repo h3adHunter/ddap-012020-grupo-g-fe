@@ -2,8 +2,7 @@
   <div>
     <b-navbar class="bd-navbar" type="dark" toggleable="lg">
       <b-navbar-brand to="/">
-        <iconify-icon :icon="icons.cart" />
-        Abastify
+        <img src="../assets/logo.png" width="150px" />
       </b-navbar-brand>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
@@ -12,9 +11,7 @@
                     <b-button size="sm" class="my-2 my-sm-0" type="submit">Buscar</b-button>
         </b-nav-form>-->
         <b-nav-item v-if="true">
-          <b-button size="sm" variant="outline-info" to="/register"
-            >Registrarse</b-button
-          >
+          <b-button size="sm" variant="outline-info" to="/register">Registrarse</b-button>
         </b-nav-item>
         <b-nav-item v-if="true">
           <b-button size="sm" variant="info" to="/login">Ingresar</b-button>
