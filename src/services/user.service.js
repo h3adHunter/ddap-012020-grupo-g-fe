@@ -12,7 +12,7 @@ export const userService = {
   // delete: _delete
 }
 
-function login(username: string, password: string) {
+function login(username, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -37,7 +37,7 @@ function logout() {
   localStorage.removeItem('user')
 }
 
-function register(user: Record<string, any>) {
+function register(user) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -85,7 +85,7 @@ function register(user: Record<string, any>) {
 //     return fetch(`${API_URL}/users/${id}`, requestOptions).then(handleResponse);
 // }
 
-function handleResponse(response: Response) {
+function handleResponse(response) {
   return response.text().then((text) => {
     const data = text && JSON.parse(text)
     if (!response.ok) {
