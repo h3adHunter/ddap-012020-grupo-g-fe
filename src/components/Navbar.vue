@@ -11,10 +11,10 @@
                     <b-button size="sm" class="my-2 my-sm-0" type="submit">Buscar</b-button>
         </b-nav-form>-->
         <b-nav-item v-if="true">
-          <b-button size="sm" variant="outline-info" to="/register">Registrarse</b-button>
+          <b-button class="register-button" size="sm" to="/register">Registrarse</b-button>
         </b-nav-item>
         <b-nav-item v-if="true">
-          <b-button size="sm" variant="info" to="/login">Ingresar</b-button>
+          <b-button class="login-button" size="sm" to="/login">Ingresar</b-button>
         </b-nav-item>
         <!-- <b-nav-item-dropdown right>
                     <template v-slot:button-content>
@@ -41,7 +41,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 // import { mapState, mapActions } from "vuex";
 import IconifyIcon from '@iconify/vue'
 import cart from '@iconify/icons-mdi/cart'
@@ -68,8 +68,40 @@ export default {
 
 <style scoped>
 .bd-navbar {
-  background: #563d7c;
+  background: #0f0f0f;
   box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.25),
     inset 0 -1px 5px rgba(0, 0, 0, 0.25) !important;
 }
+
+.login-button {
+  background-color: #ffffff;
+  color: #333333;
+  cursor: pointer;
+  border: none;
+  padding: 10px;
+  transition: background-color 0.2s ease-in-out;
+  width: 100%;
+}
+
+.login-button:hover {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+.register-button {
+  background-color: #173541;
+  color: #cccccc;
+  cursor: pointer;
+  border: none;
+  padding: 10px;
+  transition: background-color 0.2s ease-in-out;
+  width: 100%;
+}
+
+.register-button:hover {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+
 </style>
