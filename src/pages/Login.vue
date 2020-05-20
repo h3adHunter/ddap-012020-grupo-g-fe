@@ -7,39 +7,73 @@
         Bienvenido a Abastify, la confianza del barrio en tu casa.
       </p>
     </div>
-    <div id="form">
-      <b-form @submit="onLogin">
-        <b-form-group
-          description=""
-          label="Email"
-          label-for="email"
-          :invalid-feedback="errors.email[0]"
-          :state="errors.email.length === 0">
-          <b-form-input id="email" type="text" v-model="form.email" placeholder="usuario@mailbox.com" autocomplete="off"></b-form-input>
-        </b-form-group>
-        
-        <b-form-group
-          description=""
-          label="Contraseña"
-          label-for="password"
-          :invalid-feedback="errors.password[0]"
-          :state="errors.password.length === 0">
-          <b-row>
-            <b-col sm="10">
-              <b-form-input id="password" :type="passwordType" v-model="form.password" placeholder="**********"></b-form-input>
-            </b-col>
-            <b-col sm="2">
-              <i class="fas" style="margin-top: 10px;" :class="[passwordIcon]" @click="hidePassword = !hidePassword"></i>
-            </b-col>
-          </b-row>
-        </b-form-group>
-        <b-button id="login-button" type="submit">Ingresar</b-button>
-        <p style="margin-top: 15px; text-align: center;">
-          Eres nuevo? Registrate!
-        </p>
-        <b-button id="register-button" type="submit">Registrarse</b-button>
-      </b-form>
-    </div>
+    <b-overlay :show="loading" rounded="sm">
+      <div id="form">
+        <b-form @submit.prevent="handleLogin">
+          <b-form-group
+            label="Email"
+            label-for="email"
+            :invalid-feedback="errors.first('Email')"
+            :state="!submitted && errors.has('Email')">
+            <b-form-input 
+              id="email" 
+              name="Email"
+              type="text" 
+              v-model="form.email" 
+              v-validate="'required|email'"
+              placeholder="ejemplo@mailbox.com" 
+              autocomplete="off">
+            </b-form-input>
+          </b-form-group>
+          
+          <b-form-group
+            description=""
+            label="Contraseña"
+            label-for="password"
+            :invalid-feedback="errors.first('Contraseña')"
+            :state="!submitted && errors.has('Contraseña')">
+            <b-row>
+              <b-col sm="10">
+                  <b-form-input 
+                    id="password" 
+                    name="Contraseña"
+                    :type="passwordType" 
+                    v-model="form.password" 
+                    v-validate="'required'"
+                    placeholder="**********"
+                    ref="password">
+                  </b-form-input>
+              </b-col>
+              <b-col sm="2">
+                <i 
+                  class="fas" 
+                  style="margin-top: 10px;" 
+                  :class="[passwordIcon]" 
+                  @click="hidePassword = !hidePassword">
+                </i>
+              </b-col>
+            </b-row>
+          </b-form-group>
+
+          <b-button 
+            id="login-button" 
+            type="submit">
+            Ingresar
+          </b-button>
+          
+          <p style="margin-top: 15px; text-align: center;">
+            Eres nuevo? Registrate!
+          </p>
+
+          <b-button 
+            id="register-button" 
+            @click="goToRegister">
+            Registrarse
+          </b-button>
+
+        </b-form>
+      </div>
+    </b-overlay>
   </div>
 </template>
 
@@ -52,11 +86,9 @@ export default {
         email: '',
         password: '',
       },
-      errors: {
-        email: [],
-        password: []
-      },
-      hidePassword: true
+      submitted: false,
+      hidePassword: true,
+      loading: false
     }
   },
   computed: {
@@ -68,9 +100,19 @@ export default {
     }
   },
   methods: {
-    onLogin(event) {
-      event.preventDefault()
-      console.log(JSON.stringify(this.form))
+    handleLogin() {
+      this.submitted = true
+      this.loading = true
+      console.log("Ingresando...")
+      this.$validator.validate().then(valid => {
+          setTimeout( function() { this.loading = false }.bind(this), 1000)
+          if (valid) {
+            console.log(JSON.stringify(this.form))
+          }
+      })
+    },
+    goToRegister() {
+      this.$router.push('/register')
     }
   }
 }
@@ -83,7 +125,7 @@ div#login {
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 80vh;
+  height: 89vh;
 }
 
 div#login div#description {
@@ -108,7 +150,7 @@ div#login div#description p {
 
 div#login div#form {
   background-color: #0e1013;
-  border-radius: 0px 5px 5px 0px;
+  border-radius: 5px 5px 5px 5px;
   box-shadow: 20px 0px 30px 0px #666;
   color: #f3f4f5;
   width: 400px;
@@ -120,7 +162,6 @@ div#login div#form input {
   border: none;
   color: #ecf0f1;
   font-size: 1em;
-  margin-bottom: 20px;
 }
 
 div#login div#form ::placeholder {
