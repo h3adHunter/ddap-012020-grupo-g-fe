@@ -32,7 +32,7 @@ const actions = {
     
         userService.register(user)
             .then(
-                user => {
+                () => {
                     commit('registerSuccess');
                     router.push('/login');
                     setTimeout(() => {
