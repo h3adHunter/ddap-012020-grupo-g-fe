@@ -1,5 +1,5 @@
 import { authHeader } from '../utils/helpers/auth-header'
-import userService from './user.service'
+import { userService } from './user.service'
 
 const API_URL = process.env.API_URL || process.env.VUE_APP_API_URL
 
