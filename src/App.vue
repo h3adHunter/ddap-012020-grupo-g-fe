@@ -69,8 +69,7 @@ export default {
     isShowingAlert() {
       if (this.alert.show)
         this.showAlert()
-    },
-    $route (to, from){}
+    }
   }  
 }
 </script>
