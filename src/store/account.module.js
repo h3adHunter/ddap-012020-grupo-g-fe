@@ -1,5 +1,5 @@
-import { userService } from '../services';
-import { router } from '../routes/router';
+import { userService } from '../services/user.service';
+import router from '../routes/router';
 
 const user = JSON.parse(localStorage.getItem('user'));
 const state = user
@@ -7,20 +7,21 @@ const state = user
     : { status: {}, user: null };
 
 const actions = {
-    login({ dispatch, commit }, { username, password }) {
-        commit('loginRequest', { username });
-    
-        userService.login(username, password)
+    login({ dispatch, commit }, { email, password }) {
+        commit('loginRequest', { email });
+
+        userService.login(email, password)
             .then(
                 user => {
-                    commit('loginSuccess', user);
-                    router.push('/');
+                    commit('loginSuccess', user)
+                    dispatch('alert/success', 'Bienvenido a Abastify!', { root: true });
+                    router.push('/')
                 },
                 error => {
-                    commit('loginFailure', error);
+                    commit('loginFailure', error)
                     dispatch('alert/error', error, { root: true });
                 }
-            );
+            )
     },
     logout({ commit }) {
         userService.logout();
@@ -32,15 +33,15 @@ const actions = {
         userService.register(user)
             .then(
                 user => {
-                    commit('registerSuccess', user);
+                    commit('registerSuccess');
                     router.push('/login');
                     setTimeout(() => {
                         // display success message after route change completes
-                        dispatch('alert/success', 'Registration successful', { root: true });
+                        dispatch('alert/success', 'Usuario registrado correctamente', { root: true });
                     })
                 },
                 error => {
-                    commit('registerFailure', error);
+                    commit('registerFailure');
                     dispatch('alert/error', error, { root: true });
                 }
             );
@@ -64,13 +65,13 @@ const mutations = {
         state.status = {};
         state.user = null;
     },
-    registerRequest(state, user) {
+    registerRequest(state) {
         state.status = { registering: true };
     },
-    registerSuccess(state, user) {
+    registerSuccess(state) {
         state.status = {};
     },
-    registerFailure(state, error) {
+    registerFailure(state) {
         state.status = {};
     }
 };
