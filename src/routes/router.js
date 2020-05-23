@@ -12,22 +12,19 @@ const routes = [
   },
   {
     path: '/register',
-    name: 'Registrarse',
+    name: 'Register',
     component: () => import('../pages/Register.vue')
   },
   {
     path: '/login',
     name: 'Login',
     component: () => import('../pages/Login.vue')
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../pages/Profile.vue')
   }
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../pages/About.vue')
-  // },
 ]
 
 const router = new VueRouter({
@@ -40,11 +37,18 @@ router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
   const publicPages = ['/', '/about', '/login', '/register']
   const authRequired = !publicPages.includes(to.path)
+  const tryingToLogin = to.path === '/login';
+  const tryingToRegister = to.path === '/register';
   const loggedIn = localStorage.getItem('user')
 
-  if (authRequired && !loggedIn) {
+  if (authRequired && !loggedIn)
     return next('/login')
-  }
+
+  if (tryingToLogin && loggedIn)
+    return next('/')
+
+  if (tryingToRegister && loggedIn)
+    return next('/')
 
   next()
 })

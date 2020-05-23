@@ -1,5 +1,5 @@
-import { userService } from '../services';
-import { router } from '../routes/router';
+import { userService } from '../services/user.service';
+import router from '../routes/router';
 
 const user = JSON.parse(localStorage.getItem('user'));
 const state = user
@@ -7,20 +7,22 @@ const state = user
     : { status: {}, user: null };
 
 const actions = {
-    login({ dispatch, commit }, { username, password }) {
-        commit('loginRequest', { username });
-    
-        userService.login(username, password)
+    login({ dispatch, commit }, { email, password }) {
+        commit('loginRequest', { email });
+
+        userService.login(email, password)
             .then(
                 user => {
-                    commit('loginSuccess', user);
-                    router.push('/');
+                    commit('loginSuccess', user)
+                    dispatch('alert/success', 'Bienvenido a Abastify!', { root: true });
+                    router.push('/')
                 },
                 error => {
-                    commit('loginFailure', error);
+                    commit('loginFailure', error)
+                    console.log(error);
                     dispatch('alert/error', error, { root: true });
                 }
-            );
+            )
     },
     logout({ commit }) {
         userService.logout();
@@ -36,7 +38,7 @@ const actions = {
                     router.push('/login');
                     setTimeout(() => {
                         // display success message after route change completes
-                        dispatch('alert/success', 'Registration successful', { root: true });
+                        dispatch('alert/success', 'Usuario registrado correctamente', { root: true });
                     })
                 },
                 error => {
