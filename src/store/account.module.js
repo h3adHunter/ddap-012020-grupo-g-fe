@@ -19,7 +19,6 @@ const actions = {
                 },
                 error => {
                     commit('loginFailure', error)
-                    console.log(error);
                     dispatch('alert/error', error, { root: true });
                 }
             )
@@ -34,7 +33,7 @@ const actions = {
         userService.register(user)
             .then(
                 user => {
-                    commit('registerSuccess', user);
+                    commit('registerSuccess');
                     router.push('/login');
                     setTimeout(() => {
                         // display success message after route change completes
@@ -42,7 +41,7 @@ const actions = {
                     })
                 },
                 error => {
-                    commit('registerFailure', error);
+                    commit('registerFailure');
                     dispatch('alert/error', error, { root: true });
                 }
             );
@@ -66,13 +65,13 @@ const mutations = {
         state.status = {};
         state.user = null;
     },
-    registerRequest(state, user) {
+    registerRequest(state) {
         state.status = { registering: true };
     },
-    registerSuccess(state, user) {
+    registerSuccess(state) {
         state.status = {};
     },
-    registerFailure(state, error) {
+    registerFailure(state) {
         state.status = {};
     }
 };

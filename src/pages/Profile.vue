@@ -234,9 +234,7 @@ export default {
         }
       })
     },
-    linkClass(index) {
-      console.log(this.tabIndex);
-      
+    linkClass(index) {      
       if (this.tabIndex === index) {
         return ['border-gray bg-transparent text-white']
       } else {

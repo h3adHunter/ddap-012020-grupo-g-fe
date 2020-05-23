@@ -28,11 +28,11 @@ const actions = {
 };
 
 const mutations = {
-	getRequest(state, id) { },
+	// getRequest(state, id) { },
+	// getFailure(state, { id, error }) {}
 	getSuccess(state, profile) {
 		state.profile = profile
-	},
-	getFailure(state, { id, error }) {}
+	}
 }
 
 export const profile = {
