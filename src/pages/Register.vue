@@ -107,6 +107,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: "Register",
   data() {
@@ -122,18 +124,18 @@ export default {
       loading: false
     };
   },
+  computed: { },
   methods: {
+    ...mapActions('account', ['register']),
 		handleRegister() {
       this.submitted = true
       this.loading = true
-      console.log("Registrando...")
-      this.$validator.validate()
-        .then( valid => {
+      this.$validator.validate().then(valid => {
+        if (valid) {
+          this.register(this.form)
           setTimeout( function() { this.loading = false }.bind(this), 1000)
-          if (valid) {
-            console.log(JSON.stringify(this.form))
-          }
-        })
+        }
+      })
 		}
 	}
 }

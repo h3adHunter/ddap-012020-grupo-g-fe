@@ -1,6 +1,6 @@
-import { authHeader } from '../utils/helpers/auth-header'
+// import { authHeader } from '../utils/helpers/auth-header'
 
-const API_URL = process.env.BASE_URL || 'http://localhost:4000'
+const API_URL = process.env.API_URL || process.env.VUE_APP_API_URL
 
 export const userService = {
   login,
@@ -12,16 +12,16 @@ export const userService = {
   // delete: _delete
 }
 
-function login(username, password) {
+function login(email, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ email, password })
   }
 
   return fetch(`${API_URL}/users/authenticate`, requestOptions)
     .then(handleResponse)
-    .then((user) => {
+    .then( user => {
       // login successful if there's a jwt token in the response
       if (user.token) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
