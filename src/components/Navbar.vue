@@ -10,11 +10,14 @@
                     <b-form-input size="sm" class="mr-sm-2" placeholder="Buscar comercios"></b-form-input>
                     <b-button size="sm" class="my-2 my-sm-0" type="submit">Buscar</b-button>
         </b-nav-form>-->
-        <b-nav-item v-if="true">
+        <b-nav-item v-if="!account.user">
           <b-button class="register-button" size="sm" to="/register">Registrarse</b-button>
         </b-nav-item>
-        <b-nav-item v-if="true">
+        <b-nav-item v-if="!account.user">
           <b-button class="login-button" size="sm" to="/login">Ingresar</b-button>
+        </b-nav-item>
+        <b-nav-item v-if="account.user">
+          <b-button class="logout-button" size="sm" @click="logout">Cerrar sesión</b-button>
         </b-nav-item>
         <!-- <b-nav-item-dropdown right>
                     <template v-slot:button-content>
@@ -42,26 +45,29 @@
 </template>
 
 <script>
-// import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from 'vuex'
 import IconifyIcon from '@iconify/vue'
 import cart from '@iconify/icons-mdi/cart'
 
 export default {
   name: 'Navbar',
-  components: {
-    IconifyIcon
-  },
-  computed: {
-    // ...mapState({
-    //   account: state => state.account
-    // })
-  },
   data() {
     return {
       icons: {
         cart: cart
       }
     }
+  },
+  components: {
+    IconifyIcon
+  },
+  computed: {
+    ...mapState({
+      account: state => state.account
+    })
+  },
+  methods: {
+    ...mapActions('account', ['logout'])
   }
 }
 </script>
@@ -99,6 +105,21 @@ export default {
 }
 
 .register-button:hover {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+.logout-button {
+  background-color: #7a909900;
+  color: #cccccc;
+  cursor: pointer;
+  border: none;
+  padding: 10px;
+  transition: background-color 0.2s ease-in-out;
+  width: 100%;
+}
+
+.logout-button:hover {
   background-color: #cccccc;
   color: #000000;
 }

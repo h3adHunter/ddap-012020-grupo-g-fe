@@ -78,6 +78,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Login',
   data() {
@@ -95,20 +97,22 @@ export default {
     passwordType() {
       return this.hidePassword ? 'password' : 'text'
     },
+
     passwordIcon() {
       return this.hidePassword ? 'fa-eye' : 'fa-eye-slash'
     }
   },
   methods: {
+    ...mapActions('account', ['login']),
     handleLogin() {
       this.submitted = true
       this.loading = true
-      console.log("Ingresando...")
       this.$validator.validate().then(valid => {
+        if (valid) {
+          this.login(this.form)
+
           setTimeout( function() { this.loading = false }.bind(this), 1000)
-          if (valid) {
-            console.log(JSON.stringify(this.form))
-          }
+        }
       })
     },
     goToRegister() {
@@ -125,7 +129,7 @@ div#login {
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 89vh;
+  height: 75vh;
 }
 
 div#login div#description {
