@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import Map from '../components/Map.vue'
+import { profileService } from '../services/profile.service'
 
 export default {
   name: 'Home',
@@ -15,17 +16,32 @@ export default {
 
     }
   },
-  mounted() {
-    this.get(this.account.user._id)
+  created() {
+    if (this.account.status.loggedIn) {
+      setTimeout( function() { 
+        profileService.getById(this.account.user._id)
+          .then(
+            profile => {
+              if (!profile.address) {
+                this.$store.dispatch('alert/warning', 'Su perfil aún no esta completo', { root: true })
+                setTimeout( function() { this.$router.push('/profile') }.bind(this), 3000)
+              }
+            },
+            error => {
+              // commit('getFailure', { id, error: error.toString() })
+              this.$store.dispatch('alert/error', error, { root: true });
+            }
+          );
+      }.bind(this), 3000)
+    }
   },
+  mounted() {},
   computed: {
     ...mapState({
-      account: state => state.account,
-      profile: state => state.profile
+      account: state => state.account
     })
   },
   methods: {
-    ...mapActions('profile', ['get'])
   },
   components: {
     Map

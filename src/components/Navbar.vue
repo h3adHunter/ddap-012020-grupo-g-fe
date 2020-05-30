@@ -17,7 +17,10 @@
           <b-button class="login-button" size="sm" to="/login">Ingresar</b-button>
         </b-nav-item>
         <b-nav-item v-if="account.user">
-          <b-button class="logout-button" size="sm" @click="logout">Cerrar sesión</b-button>
+          <b-button class="logout-button" size="sm" to="/profile">Perfil</b-button>
+        </b-nav-item>
+        <b-nav-item v-if="account.user">
+          <b-button class="logout-button" size="sm" to="/" @click="handleLogout()">Cerrar sesión</b-button>
         </b-nav-item>
         <!-- <b-nav-item-dropdown right>
                     <template v-slot:button-content>
@@ -67,7 +70,10 @@ export default {
     })
   },
   methods: {
-    ...mapActions('account', ['logout'])
+    ...mapActions('account', ['logout']),
+    handleLogout() {
+      this.logout()
+    }
   }
 }
 </script>
