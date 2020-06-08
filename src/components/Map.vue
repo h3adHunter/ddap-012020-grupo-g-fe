@@ -17,6 +17,10 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
+import { mapState } from 'vuex'
+import { profileService } from '../services/profile.service'
+import { geoService } from '../services/geo.service'
+
 export default {
   name: 'Map',
   components: {
@@ -34,6 +38,21 @@ export default {
       center: L.latLng(-34.72557, -58.2507),
       marker: L.latLng(-34.72557, -58.2507)
     }
+  },
+  computed: {
+    ...mapState({
+      account: state => state.account
+    })
+  },
+  created() {
+    profileService.getById(this.account.user._id)
+      .then( profile => {
+        geoService.getById(profile.geo_id)
+          .then( geo => {
+            this.center = L.latLng(geo.coordinates[0], geo.coordinates[1])
+            this.marker = L.latLng(geo.coordinates[0], geo.coordinates[1])
+          })
+      })
   }
 }
 </script>

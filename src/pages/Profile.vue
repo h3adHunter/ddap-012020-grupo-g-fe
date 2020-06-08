@@ -6,7 +6,7 @@
         <p>
           Completá con tus datos personales
         </p>
-        <b-form id="userForm" @submit.prevent="handleRegister">
+        <b-form data-vv-scope="userForm" id="userForm" @submit.prevent="handleUpdateProfile">
           <b-row>
             <b-col sm="6">
               <b-form-group
@@ -91,6 +91,13 @@
               autocomplete="off">
             </b-form-input>
           </b-form-group>
+          
+          <b-button 
+            id="update-button" 
+            type="submit">
+            Guardar
+          </b-button>
+
         </b-form>
       </div>
       <div id="shop">
@@ -106,7 +113,7 @@
             <b-tab 
               title="Información"
               :title-link-class="linkClass(0)">
-              <b-form id="shopForm" @submit.prevent="handleRegister">
+              <b-form  data-vv-scope="shopForm" id="shopForm" @submit.prevent="handleUpdateShop">
                 <b-form-group
                   label="Nombre del comercio"
                   label-for="shopName"
@@ -169,6 +176,12 @@
                     autocomplete="off">
                   </b-form-input>
                 </b-form-group>
+
+                <b-button 
+                  id="update-button" 
+                  type="submit">
+                  Guardar
+                </b-button>
               </b-form>
             </b-tab>
             <b-tab 
@@ -195,10 +208,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState } from 'vuex'
+import { profileService } from '../services/profile.service'
+import { shopService } from '../services/shop.service'
 
 export default {
-  name: "Register",
+  name: "Profile",
   data() {
     return {
       form: {
@@ -216,22 +231,97 @@ export default {
           address: ''
         }
       },
+      profile: null,
+      shop: null,
       submitted: false,
       loading: false,
       tabIndex: 0
     };
   },
-  computed: { },
+  created() {
+    profileService.getById(this.account.user._id).then( profile => {
+      this.profile = profile
+      const userData = JSON.parse(JSON.stringify(this.account))      
+      this.form.user.firstName = profile.firstName || null
+      this.form.user.lastName = profile.lastName || null
+      this.form.user.email = userData.user.email || null
+      this.form.user.phoneNbr = profile.phoneNbr || null
+      this.form.user.address = profile.address || null
+      
+      shopService.getByProfileId(profile._id)
+        .then( 
+          shop => {   
+            this.shop = shop
+            this.form.shop.name = shop.name || null
+            this.form.shop.email = shop.email || null
+            this.form.shop.phoneNbr = shop.phoneNbr || null
+            this.form.shop.address = shop.address || null
+          },
+          error => {
+            this.$store.dispatch('alert/warning', 'Aún no tenes un comercio', { root: true });
+          }
+        )
+
+    })
+  },
+  computed: {
+    ...mapState({
+      account: state => state.account
+    })
+  },
+  mounted() {},
   methods: {
-    ...mapActions('account', ['register']),
-		handleRegister() {
+		handleUpdateProfile() {
       this.submitted = true
       this.loading = true
-      this.$validator.validate().then(valid => {
+      this.$validator.validateAll('userForm').then(valid => {
         if (valid) {
-          this.register(this.form)
-          setTimeout( function() { this.loading = false }.bind(this), 1000)
+          const userData = JSON.parse(JSON.stringify(this.account))
+          profileService.update(userData.user._id, this.form.user)
+            .then(
+              () => {
+                this.$store.dispatch('alert/success', 'Perfil actualizado correctamente', { root: true });
+              },
+              error => {
+                this.$store.dispatch('alert/error', error, { root: true });
+              }
+				    )
+        } else {
+          this.$store.dispatch('alert/error', "Nos faltan algunos datos", { root: true });
         }
+        this.loading = false
+      })
+    },
+    handleUpdateShop() {
+      this.submitted = true
+      this.loading = true
+      this.$validator.validateAll('shopForm').then(valid => {
+        if (valid) {
+          if (this.shop) {
+            shopService.update(this.shop._id, this.form.shop)
+              .then(
+                () => {
+                  this.$store.dispatch('alert/success', 'Comercio actualizado correctamente', { root: true });
+                },
+                error => {
+                  this.$store.dispatch('alert/error', error, { root: true });
+                }
+              )
+          } else {
+            shopService.add({ profile_id: this.profile._id, ...this.form.shop})
+              .then(
+                () => {
+                  this.$store.dispatch('alert/success', 'Comercio creado correctamente', { root: true });
+                },
+                error => {
+                  this.$store.dispatch('alert/error', error, { root: true });
+                }
+              )
+          }
+        } else {
+          this.$store.dispatch('alert/error', "Nos faltan algunos datos", { root: true });
+        }
+        this.loading = false
       })
     },
     linkClass(index) {      

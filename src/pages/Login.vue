@@ -110,9 +110,8 @@ export default {
       this.$validator.validate().then(valid => {
         if (valid) {
           this.login(this.form)
-
-          setTimeout( function() { this.loading = false }.bind(this), 1000)
         }
+        this.loading = false
       })
     },
     goToRegister() {
