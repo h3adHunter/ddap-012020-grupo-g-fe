@@ -45,14 +45,16 @@ export default {
     })
   },
   created() {
-    profileService.getById(this.account.user._id)
-      .then( profile => {
-        geoService.getById(profile.geo_id)
-          .then( geo => {
-            this.center = L.latLng(geo.coordinates[0], geo.coordinates[1])
-            this.marker = L.latLng(geo.coordinates[0], geo.coordinates[1])
-          })
-      })
+    if (this.account.status.loggedIn) {
+      profileService.getById(this.account.user._id)
+        .then( profile => {
+          geoService.getById(profile.geo_id)
+            .then( geo => {
+              this.center = L.latLng(geo.coordinates[0], geo.coordinates[1])
+              this.marker = L.latLng(geo.coordinates[0], geo.coordinates[1])
+            })
+        })
+    }
   }
 }
 </script>
