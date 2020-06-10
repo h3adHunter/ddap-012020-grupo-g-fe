@@ -257,7 +257,7 @@ export default {
             this.form.shop.phoneNbr = shop.phoneNbr || null
             this.form.shop.address = shop.address || null
           },
-          error => {
+          () => {
             this.$store.dispatch('alert/warning', 'Aún no tenes un comercio', { root: true });
           }
         )
