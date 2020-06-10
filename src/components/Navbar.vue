@@ -10,6 +10,9 @@
                     <b-form-input size="sm" class="mr-sm-2" placeholder="Buscar comercios"></b-form-input>
                     <b-button size="sm" class="my-2 my-sm-0" type="submit">Buscar</b-button>
         </b-nav-form>-->
+        <b-nav-item>
+          <b-button class="shops-button" size="sm" to="/shops">Listado de Comercios</b-button>
+        </b-nav-item>
         <b-nav-item v-if="!account.user">
           <b-button class="register-button" size="sm" to="/register">Registrarse</b-button>
         </b-nav-item>
@@ -17,7 +20,7 @@
           <b-button class="login-button" size="sm" to="/login">Ingresar</b-button>
         </b-nav-item>
         <b-nav-item v-if="account.user">
-          <b-button class="logout-button" size="sm" to="/profile">Perfil</b-button>
+          <b-button class="profile-button" size="sm" to="/profile">Perfil</b-button>
         </b-nav-item>
         <b-nav-item v-if="account.user">
           <b-button class="logout-button" size="sm" to="/" @click="handleLogout()">Cerrar sesión</b-button>
@@ -113,6 +116,26 @@ export default {
 .register-button:hover {
   background-color: #cccccc;
   color: #000000;
+}
+
+.shops-button {
+  background-color: #666363;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  padding: 10px;
+  transition: background-color 0.2s ease-in-out;
+  width: 100%;
+}
+
+.profile-button {
+  background-color: #7a909900;
+  color: #cccccc;
+  cursor: pointer;
+  border: none;
+  padding: 10px;
+  transition: background-color 0.2s ease-in-out;
+  width: 100%;
 }
 
 .logout-button {
