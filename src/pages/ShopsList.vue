@@ -39,6 +39,7 @@
                   align="center"
                   class="mx-0"
                 >
+                  <div class="mr-2">{{item.address}}</div>
                   <v-rating
                     :value="item.rating"
                     color="#fcbe12"
@@ -57,7 +58,7 @@
               class="m-3"
               size="125"
               tile>
-              <v-img :src="item.pic_url"></v-img>
+              <v-img :src="item.picUrl"></v-img>
             </v-avatar>
           </div>
         </v-card>
@@ -67,7 +68,7 @@
 </template>
 
 <script>
-// import { shopService } from '../services/shop.service';
+import { shopService } from '../services/shop.service';
 
 export default {
   name: 'Login',
@@ -76,7 +77,7 @@ export default {
       items: [
         {
           color: '#1F7087',
-          pic_url: 'https://media.versionrosario.com/adjuntos/248/imagenes/000/073/0000073472.jpg',
+          picUrl: 'https://media.versionrosario.com/adjuntos/248/imagenes/000/073/0000073472.jpg',
           name: 'Lo de Martín',
           desc: 'Almacén de barrio',
           rating: 4.5,
@@ -84,7 +85,7 @@ export default {
         },
         {
           color: '#cf2c29',
-          pic_url: 'https://assets.entrepreneur.com/content/3x2/2000/20180523134045-panaderiqa.jpeg?width=700&crop=2:1',
+          picUrl: 'https://assets.entrepreneur.com/content/3x2/2000/20180523134045-panaderiqa.jpeg?width=700&crop=2:1',
           name: 'Panadería Bugatto',
           desc: 'La mejor panadería de Quilmes',
           rating: 5,
@@ -95,15 +96,16 @@ export default {
     }
   },
   created() {
-    // shopService.getAll()
-    //   .then(
-    //     shops => {
-    //       this.items = shops
-    //     },
-    //     error => {
-    //       this.$store.dispatch('alert/error', error, { root: true });
-    //     }
-    //   );
+    shopService.getAll()
+      .then(
+        shops => {
+          this.items = shops
+          console.log(shops)
+        },
+        error => {
+          this.$store.dispatch('alert/error', error, { root: true });
+        }
+      );
   },
   computed: { },
   methods: { 
