@@ -8,6 +8,9 @@ const actions = {
     success({ commit }, message) {
         commit('success', message);
     },
+    info({ commit }, message) {
+        commit('info', message);
+    },
     error({ commit }, message) {
         commit('error', message);
     },
@@ -25,6 +28,12 @@ const mutations = {
 			state.message = message
 			state.show = true
 			state.dismissSecs = 3
+    },
+    info(state, message) {
+        state.type = 'info'
+        state.message = message
+        state.show = true
+        state.dismissSecs = 3
     },
     error(state, message) {
 			state.type = 'danger'

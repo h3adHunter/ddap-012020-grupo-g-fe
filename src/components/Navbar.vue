@@ -119,7 +119,7 @@ export default {
 }
 
 .shops-button {
-  background-color: #666363;
+  background-color: #745d8a;
   color: #ffffff;
   cursor: pointer;
   border: none;
@@ -129,7 +129,7 @@ export default {
 }
 
 .profile-button {
-  background-color: #7a909900;
+  background-color: #173541;
   color: #cccccc;
   cursor: pointer;
   border: none;

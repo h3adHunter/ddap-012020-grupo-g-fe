@@ -84,8 +84,8 @@ export default {
 }
 
 #main-panel {
-  min-height: 89vh;
-  width: 100%;
+  display: block;
+  overflow: auto;
   background-color: #e2e2e5;
 }
 </style>
