@@ -16,6 +16,10 @@ Vue.use(NavbarPlugin)
 Vue.use(VeeValidate)
 Validator.localize('es', es)
 
+console.log(process.env.NODE_ENV)
+console.log(process.env.VUE_APP_API_URL)
+console.log(process.env.API_URL)
+
 Vue.config.productionTip = false
 
 new Vue({
