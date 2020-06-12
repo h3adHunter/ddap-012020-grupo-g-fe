@@ -6,5 +6,8 @@ module.exports = {
         args[0].title = 'Abastify'
         return args
       })
-  }
+  },
+  "transpileDependencies": [
+    "vuetify"
+  ]
 }

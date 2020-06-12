@@ -28,7 +28,6 @@ export default {
               }
             },
             error => {
-              // commit('getFailure', { id, error: error.toString() })
               this.$store.dispatch('alert/error', error, { root: true });
             }
           );

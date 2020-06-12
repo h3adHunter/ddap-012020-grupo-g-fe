@@ -257,7 +257,7 @@ export default {
             this.form.shop.phoneNbr = shop.phoneNbr || null
             this.form.shop.address = shop.address || null
           },
-          error => {
+          () => {
             this.$store.dispatch('alert/warning', 'Aún no tenes un comercio', { root: true });
           }
         )
@@ -280,16 +280,18 @@ export default {
           profileService.update(userData.user._id, this.form.user)
             .then(
               () => {
+                this.loading = false
                 this.$store.dispatch('alert/success', 'Perfil actualizado correctamente', { root: true });
               },
               error => {
+                this.loading = false
                 this.$store.dispatch('alert/error', error, { root: true });
               }
 				    )
         } else {
+          this.loading = false
           this.$store.dispatch('alert/error', "Nos faltan algunos datos", { root: true });
         }
-        this.loading = false
       })
     },
     handleUpdateShop() {
@@ -301,9 +303,11 @@ export default {
             shopService.update(this.shop._id, this.form.shop)
               .then(
                 () => {
+                  this.loading = false
                   this.$store.dispatch('alert/success', 'Comercio actualizado correctamente', { root: true });
                 },
                 error => {
+                  this.loading = false
                   this.$store.dispatch('alert/error', error, { root: true });
                 }
               )
@@ -311,17 +315,19 @@ export default {
             shopService.add({ profile_id: this.profile._id, ...this.form.shop})
               .then(
                 () => {
+                  this.loading = false
                   this.$store.dispatch('alert/success', 'Comercio creado correctamente', { root: true });
                 },
                 error => {
+                  this.loading = false
                   this.$store.dispatch('alert/error', error, { root: true });
                 }
               )
           }
         } else {
+          this.loading = false
           this.$store.dispatch('alert/error', "Nos faltan algunos datos", { root: true });
         }
-        this.loading = false
       })
     },
     linkClass(index) {      

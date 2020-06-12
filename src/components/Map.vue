@@ -1,8 +1,8 @@
 <template>
   <div>
-    <l-map ref="map" :zoom="zoom" :center="center" style="height: 620px;">
+    <l-map ref="map" :zoom="zoom" :zoomSnap="zoomSnap" :center="center" style="height: 690px;">
       <l-tile-layer :url="url" :attribution="attribution"> </l-tile-layer>
-      <l-marker :lat-lng="marker"></l-marker>
+      <l-marker v-if="marker" :lat-lng="marker"></l-marker>
     </l-map>
   </div>
 </template>
@@ -34,9 +34,10 @@ export default {
         'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZ2FpYWNvb3AiLCJhIjoiY2s5YnhjcmsxMDM1aTNocHNmdnJxdm4weSJ9.Qvlrb6CIfWVpJuxIRrBKZA',
       attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      zoom: 14,
+      zoom: 10.5,
+      zoomSnap: 0.25,
       center: L.latLng(-34.72557, -58.2507),
-      marker: L.latLng(-34.72557, -58.2507)
+      marker: null
     }
   },
   computed: {
@@ -45,14 +46,28 @@ export default {
     })
   },
   created() {
-    profileService.getById(this.account.user._id)
-      .then( profile => {
-        geoService.getById(profile.geo_id)
-          .then( geo => {
-            this.center = L.latLng(geo.coordinates[0], geo.coordinates[1])
-            this.marker = L.latLng(geo.coordinates[0], geo.coordinates[1])
-          })
-      })
+    if (this.account.status.loggedIn) {
+      this.$store.dispatch('alert/info', 'Obteniendo tu ubicación...', { root: true })
+      setTimeout( function() { 
+        profileService.getById(this.account.user._id)
+        .then( profile => {
+          geoService.getById(profile.geo_id)
+            .then( geo => {
+              this.center = L.latLng(geo.coordinates[0], geo.coordinates[1])
+              this.marker = L.latLng(geo.coordinates[0], geo.coordinates[1])
+              setTimeout( function() { 
+                for (let i = 0; i < 100; i++) {
+                  setTimeout( function() { 
+                    this.zoom = this.zoom + 0.05
+                  }.bind(this), 25 * i)        
+                }
+              }.bind(this), 1000)
+            })
+        })
+      }.bind(this), 3000) 
+      
+
+    }
   }
 }
 </script>
