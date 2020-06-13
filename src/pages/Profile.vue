@@ -2,15 +2,13 @@
   <b-overlay :show="loading" rounded="sm">
     <div id="profile">
       <div id="user">
-        <h1>Perfil</h1>
-        <p>
-          Completá con tus datos personales
-        </p>
+        <h1>{{$t('profile')}}</h1>
+        <p>{{$t('fill_with_your_account_data')}}</p>
         <b-form data-vv-scope="userForm" id="userForm" @submit.prevent="handleUpdateProfile">
           <b-row>
             <b-col sm="6">
               <b-form-group
-                label="Nombre"
+                :label="$t('name')"
                 label-for="firstName"
                 :invalid-feedback="errors.first('Nombre')"
                 :state="!submitted && errors.has('Nombre')">
@@ -27,7 +25,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                label="Apellido"
+                :label="$t('surname')"
                 label-for="lastName"
                 :invalid-feedback="errors.first('Apellido')"
                 :stateuser="!submitted && errors.has('Apellido')">
@@ -61,7 +59,7 @@
           </b-form-group>
 
           <b-form-group
-            label="Número de telefono"
+            :label="$t('phone_number')"
             label-for="userPhoneNbr"
             :invalid-feedback="errors.first('Celular')"
             :state="!submitted && errors.has('Celular')">
@@ -71,13 +69,13 @@
               type="text" 
               v-model="form.user.phoneNbr" 
               v-validate="{ regex: '^([0-9]+)$' }"
-              placeholder="Idealmente un celular" 
+              :placeholder="$t('phone_number_info')" 
               autocomplete="off">
             </b-form-input>
           </b-form-group>
 
           <b-form-group
-            label="Dirección del domicilio"
+            :label="$t('address')"
             label-for="address"
             :invalid-feedback="errors.first('Direccion')"
             :state="!submitted && errors.has('Direccion')">
@@ -87,7 +85,7 @@
               type="text" 
               v-model="form.user.address" 
               v-validate="'required'"
-              placeholder="Av. Mitre 1234" 
+              :placeholder="$t('address_example')"
               autocomplete="off">
             </b-form-input>
           </b-form-group>
@@ -95,15 +93,15 @@
           <b-button 
             id="update-button" 
             type="submit">
-            Guardar
+            {{$t('save')}}
           </b-button>
 
         </b-form>
       </div>
       <div id="shop">
-        <h1>Comercio</h1>
+        <h1>{{$t('shop')}}</h1>
         <p>
-          Completá con los datos de tu comercio
+          {{$t('fill_with_your_shop_data')}}
         </p>
         <b-card id="shopCard" no-body>
           <b-tabs 
@@ -111,11 +109,11 @@
             v-model="tabIndex"
             content-class="mt-3">
             <b-tab 
-              title="Información"
+              :title="$t('shop_data')"
               :title-link-class="linkClass(0)">
               <b-form  data-vv-scope="shopForm" id="shopForm" @submit.prevent="handleUpdateShop">
                 <b-form-group
-                  label="Nombre del comercio"
+                  :label="$t('shop_name')"
                   label-for="shopName"
                   :invalid-feedback="errors.first('NombreComercio')"
                   :state="!submitted && errors.has('NombreComercio')">
@@ -124,13 +122,13 @@
                     name="NombreComercio" 
                     type="text" 
                     v-model="form.shop.name"
-                    placeholder="p. ej Mi panaderia" 
+                    :placeholder="$t('shop_name_example')" 
                     autocomplete="off">
                   </b-form-input>
                 </b-form-group>
 
                 <b-form-group
-                  label="Email de contacto"
+                  :label="$t('shop_email')"
                   label-for="shopEmail"
                   :invalid-feedback="errors.first('EmailComercio')"
                   :state="!submitted && errors.has('EmailComercio')">
@@ -140,13 +138,13 @@
                     type="text" 
                     v-model="form.shop.email" 
                     v-validate="'required|email'"
-                    placeholder="mipanaderia@gmail.com" 
+                    :placeholder="$t('email_example')" 
                     autocomplete="off">
                   </b-form-input>
                 </b-form-group>
 
                 <b-form-group
-                  label="Número de teléfono"
+                  :label="$t('phone_number')"
                   label-for="shopPhoneNbr"
                   :invalid-feedback="errors.first('CelularComercio')"
                   :state="!submitted && errors.has('CelularComercio')">
@@ -156,13 +154,13 @@
                     type="text" 
                     v-model="form.shop.phoneNbr" 
                     v-validate="{ regex: '^([0-9]+)$' }"
-                    placeholder="Idealmente un celular" 
+                    :placeholder="$t('phone_number_info')" 
                     autocomplete="off">
                   </b-form-input>
                 </b-form-group>
                 
                 <b-form-group
-                  label="Dirección del comercio"
+                  :label="$t('shop_address')"
                   label-for="shopAddress"
                   :invalid-feedback="errors.first('DireccionComercio')"
                   :state="!submitted && errors.has('DireccionComercio')">
@@ -172,7 +170,7 @@
                     type="text" 
                     v-model="form.shop.address" 
                     v-validate="'required'"
-                    placeholder="Av. Mitre 1234" 
+                    :placeholder="$t('address_example')" 
                     autocomplete="off">
                   </b-form-input>
                 </b-form-group>
@@ -180,17 +178,17 @@
                 <b-button 
                   id="update-button" 
                   type="submit">
-                  Guardar
+                  {{$t('save')}}
                 </b-button>
               </b-form>
             </b-tab>
             <b-tab 
-              title="Horarios"
+              :title="$t('time_schedule')"
               :title-link-class="linkClass(1)">
 
             </b-tab>
             <b-tab 
-              title="Métodos de pago"
+              :title="$t('payment_methods')"
               :title-link-class="linkClass(2)">
               
             </b-tab>
@@ -258,7 +256,7 @@ export default {
             this.form.shop.address = shop.address || null
           },
           () => {
-            this.$store.dispatch('alert/warning', 'Aún no tenes un comercio', { root: true });
+            this.$store.dispatch('alert/warning', this.$t('no_shop_yet'), { root: true });
           }
         )
 
@@ -281,7 +279,7 @@ export default {
             .then(
               () => {
                 this.loading = false
-                this.$store.dispatch('alert/success', 'Perfil actualizado correctamente', { root: true });
+                this.$store.dispatch('alert/success', this.$t('profile_updated'), { root: true });
               },
               error => {
                 this.loading = false
@@ -290,7 +288,7 @@ export default {
 				    )
         } else {
           this.loading = false
-          this.$store.dispatch('alert/error', "Nos faltan algunos datos", { root: true });
+          this.$store.dispatch('alert/error', this.$t('missing_data'), { root: true });
         }
       })
     },
@@ -316,7 +314,7 @@ export default {
               .then(
                 () => {
                   this.loading = false
-                  this.$store.dispatch('alert/success', 'Comercio creado correctamente', { root: true });
+                  this.$store.dispatch('alert/success', this.$t('shop_created'), { root: true });
                 },
                 error => {
                   this.loading = false
@@ -326,7 +324,7 @@ export default {
           }
         } else {
           this.loading = false
-          this.$store.dispatch('alert/error', "Nos faltan algunos datos", { root: true });
+          this.$store.dispatch('alert/error', this.$t('missing_data'), { root: true });
         }
       })
     },

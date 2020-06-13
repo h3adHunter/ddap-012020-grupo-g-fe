@@ -2,10 +2,8 @@
   <div id="login">
     <div id="description">
       <img src="../assets/favicon.png" width="100px" />
-      <h1 style="color: #161a1f;">Ingresá</h1>
-      <p>
-        Bienvenido a Abastify, la confianza del barrio en tu casa.
-      </p>
+      <h1 style="color: #161a1f;">{{$t('login')}}</h1>
+      <p>{{ $t('login_welcome')}}</p>
     </div>
     <b-overlay :show="loading" rounded="sm">
       <div id="form">
@@ -28,7 +26,7 @@
           
           <b-form-group
             description=""
-            label="Contraseña"
+            :label="$t('password')"
             label-for="password"
             :invalid-feedback="errors.first('Contraseña')"
             :state="!submitted && errors.has('Contraseña')">
@@ -58,17 +56,17 @@
           <b-button 
             id="login-button" 
             type="submit">
-            Ingresar
+            {{$t('login')}}
           </b-button>
           
           <p style="margin-top: 15px; text-align: center;">
-            Eres nuevo? Registrate!
+            {{$t('new_to_abastify')}}
           </p>
 
           <b-button 
             id="register-button" 
             @click="goToRegister">
-            Registrarse
+            {{$t('register')}}
           </b-button>
 
         </b-form>

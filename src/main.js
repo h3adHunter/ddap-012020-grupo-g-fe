@@ -8,6 +8,7 @@ import vuetify from './plugins/vuetify'
 import { BootstrapVue, IconsPlugin, BootstrapVueIcons, NavbarPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import i18n from './i18n'
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -22,5 +23,6 @@ new Vue({
   router,
   store,
   vuetify,
+  i18n,
   render: h => h(App)
 }).$mount('#app')
