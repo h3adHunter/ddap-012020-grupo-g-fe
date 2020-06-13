@@ -47,26 +47,6 @@
         <b-nav-item v-if="account.user">
           <b-button class="transparent-button" size="sm" to="/" @click="handleLogout()">{{$t('logout')}}</b-button>
         </b-nav-item>
-        <!-- <b-nav-item-dropdown right>
-          <template v-slot:button-content>
-              <v-icon>
-                  {{cart}}
-              </v-icon>
-              {{account.user.firstName}}
-          </template>
-          <b-dropdown-item>
-              <router-link to="/account">Mi cuenta</router-link>
-          </b-dropdown-item>
-          <b-dropdown-item>
-              <router-link to="/orders">Mis pedidos</router-link>
-          </b-dropdown-item>
-          <b-dropdown-item>
-              <router-link to="/addresses">Mis direcciones</router-link>
-          </b-dropdown-item>
-          <b-dropdown-item>
-              <router-link to="/login">Cerrar sesión</router-link>
-          </b-dropdown-item>
-        </b-nav-item-dropdown>-->
       </b-navbar-nav>
     </b-navbar>
   </div>
