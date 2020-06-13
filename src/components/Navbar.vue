@@ -10,7 +10,14 @@
                     <b-form-input size="sm" class="mr-sm-2" placeholder="Buscar comercios"></b-form-input>
                     <b-button size="sm" class="my-2 my-sm-0" type="submit">Buscar</b-button>
         </b-nav-form>-->
-        
+        <b-nav-item>
+          <b-nav-dropdown v-model="$i18n.locale" :text="$t('language')">
+            <b-dropdown-item v-for="(lang, i) in langs" :key="`Lang${i}`" @click="handleLang(lang)">
+              {{ lang.name }}
+            </b-dropdown-item>
+              <!-- <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">{{ lang }}</option> -->
+          </b-nav-dropdown>
+        </b-nav-item>
         <b-nav-item>
           <b-button class="transparent-button" size="sm" to="/">
             <v-icon color="#cccccc">{{ icons.map }}</v-icon>
@@ -22,10 +29,10 @@
           </b-button>
         </b-nav-item>
         <b-nav-item v-if="!account.user">
-          <b-button class="register-button" size="sm" to="/register">Registrarse</b-button>
+          <b-button class="register-button" size="sm" to="/register">{{$t('register')}}</b-button>
         </b-nav-item>
         <b-nav-item v-if="!account.user">
-          <b-button class="login-button" size="sm" to="/login">Ingresar</b-button>
+          <b-button class="login-button" size="sm" to="/login">{{$t('login')}}</b-button>
         </b-nav-item>
         <b-nav-item v-if="account.user">
           <b-button class="transparent-button" size="sm" to="/cart">
@@ -38,7 +45,7 @@
           </b-button>
         </b-nav-item>
         <b-nav-item v-if="account.user">
-          <b-button class="transparent-button" size="sm" to="/" @click="handleLogout()">Cerrar sesión</b-button>
+          <b-button class="transparent-button" size="sm" to="/" @click="handleLogout()">{{$t('logout')}}</b-button>
         </b-nav-item>
         <!-- <b-nav-item-dropdown right>
           <template v-slot:button-content>
@@ -78,7 +85,16 @@ export default {
         shops: mdiStore,
         map: mdiMapMarker,
         profile: mdiAccount
-      }
+      },
+      langs: [
+        {
+          name: 'English',
+          code: 'en'
+        },
+        {
+          name: 'Español',
+          code: 'es'
+        }]
     }
   },
   components: { },
@@ -91,6 +107,9 @@ export default {
     ...mapActions('account', ['logout']),
     handleLogout() {
       this.logout()
+    },
+    handleLang(lang){
+      this.$i18n.locale = lang.code
     }
   }
 }

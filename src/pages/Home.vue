@@ -23,7 +23,7 @@ export default {
           .then(
             profile => {
               if (!profile.address) {
-                this.$store.dispatch('alert/warning', 'Su perfil aún no esta completo', { root: true })
+                this.$store.dispatch('alert/warning', this.$t('profile_incomplete'), { root: true })
                 setTimeout( function() { this.$router.push('/profile') }.bind(this), 3000)
               }
             },

@@ -1,22 +1,22 @@
 <template>
   <v-container id="shops">
     <v-row dense>
-      <v-col cols="12">
+      <v-col cols="12"  v-if="!account.user">
         <v-card
           color="#0f0f0f"
           dark
           raised>
 
-          <v-card-title class="headline">Compra y vende desde tu casa, registrate ahora</v-card-title>
-          <v-card-subtitle>Navegá a través de los comercios o crea el tuyo. Agrega productos a tu changuito, hace tu pedido y recibilo en la puerta de tu casa.</v-card-subtitle>
+          <v-card-title class="headline">{{$t('buy_from_home')}}</v-card-title>
+          <v-card-subtitle>{{$t('buy_from_home2')}}</v-card-subtitle>
 
           <v-card-actions>
-            <v-btn text to="/register">¿Todavía no te registraste?</v-btn>
+            <v-btn text to="/register">{{$t('not_registered_yet')}}</v-btn>
           </v-card-actions>
           
         </v-card>
       </v-col>
-
+      
       <v-col
         v-for="(shop, index) in shops"
         :key="index"
@@ -69,6 +69,7 @@
 
 <script>
 import { shopService } from '../services/shop.service';
+import { mapState } from 'vuex'
 
 export default {
   name: 'Login',
@@ -90,7 +91,11 @@ export default {
         }
       );
   },
-  computed: { },
+  computed: {
+    ...mapState({
+      account: state => state.account
+    })
+  },
   methods: { 
     handleShopDetail(shop) {
       console.log(shop)
