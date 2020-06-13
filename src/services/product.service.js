@@ -8,10 +8,10 @@ if (process.env.NODE_ENV === "development") {
     API_URL = "https://abastify-be.herokuapp.com"
 }
 
-export const shopService = {
+export const productService = {
 	getAll,
+	getByShopId,
 	getById,
-	getByProfileId,
 	add,
 	update
 }
@@ -25,6 +25,14 @@ function getAll() {
 	return fetch(`${API_URL}/shops/`, requestOptions).then(handleResponse);
 }
 
+function getByShopId(shopId) {
+	const requestOptions = {
+		method: 'GET'
+	};
+
+	return fetch(`${API_URL}/products/shop/${shopId}`, requestOptions).then(handleResponse);
+}
+
 function getById(shopId) {
 	const requestOptions = {
 		method: 'GET',
@@ -34,14 +42,6 @@ function getById(shopId) {
 	return fetch(`${API_URL}/shops/${shopId}`, requestOptions).then(handleResponse);
 }
 
-function getByProfileId(id) {
-	const requestOptions = {
-		method: 'GET',
-		headers: authHeader()
-	};
-
-	return fetch(`${API_URL}/shops/profile/${id}`, requestOptions).then(handleResponse);
-}
 
 function add(shopPayload) {
 	const requestOptions = {
