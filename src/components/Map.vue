@@ -47,7 +47,7 @@ export default {
   },
   created() {
     if (this.account.status.loggedIn) {
-      this.$store.dispatch('alert/info', 'Obteniendo tu ubicación...', { root: true })
+      this.$store.dispatch('alert/info', this.$t('getting_location'), { root: true })
       setTimeout( function() { 
         profileService.getById(this.account.user._id)
         .then( profile => {

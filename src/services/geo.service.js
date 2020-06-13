@@ -5,7 +5,7 @@ let API_URL
 if (process.env.NODE_ENV === "development") {
     API_URL = process.env.VUE_APP_API_URL
 } else if (process.env.NODE_ENV === "production") {
-    API_URL = process.env.API_URL
+    API_URL = "https://abastify-be.herokuapp.com"
 }
 
 export const geoService = {

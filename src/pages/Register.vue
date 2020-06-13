@@ -2,10 +2,8 @@
   <div id="register">
     <div id="description">
       <img src="../assets/favicon.png" width="100px" />
-      <h1 style="color: #161a1f;">Registrate</h1>
-      <p>
-        Bienvenido a Abastify, la confianza del barrio en tu casa.
-      </p>
+      <h1 style="color: #161a1f;">{{$t('register')}}</h1>
+      <p>{{$t('login_welcome')}}</p>
     </div>
     <b-overlay :show="loading" rounded="sm">
       <div id="form">
@@ -13,7 +11,7 @@
           <b-row>
             <b-col sm="6">
               <b-form-group
-                label="Nombre"
+                :label="$t('name')"
                 label-for="firstName"
                 :invalid-feedback="errors.first('Nombre')"
                 :state="!submitted && errors.has('Nombre')">
@@ -30,7 +28,7 @@
             </b-col>
             <b-col sm="6">
               <b-form-group
-                label="Apellido"
+                :label="$t('surname')"
                 label-for="lastName"
                 :invalid-feedback="errors.first('Apellido')"
                 :state="!submitted && errors.has('Apellido')">
@@ -64,7 +62,7 @@
           </b-form-group>
           
           <b-form-group
-            label="Contraseña"
+            :label="$t('password')"
             label-for="password"
             :invalid-feedback="errors.first('Contraseña')"
             :state="!submitted && errors.has('Contraseña')">
@@ -80,7 +78,7 @@
           </b-form-group>
 
           <b-form-group
-            label="Repetir contraseña"
+            :label="$t('repeat_password')"
             label-for="repeatedPassword"
             :invalid-feedback="errors.first('Repetir_contraseña')"
             :state="!submitted && errors.has('Repetir_contraseña')">
@@ -95,10 +93,10 @@
           </b-form-group>
 
           <p style="margin-top: 10px; text-align: center;">
-            No tenemos Términos ni Condiciones, simplemente abastecete.
+            {{$t('no_terms_or_conditions')}}
           </p>
           
-          <b-button id="register-button" type="submit">Registrarse</b-button>
+          <b-button id="register-button" type="submit">{{$t('register')}}</b-button>
           
         </b-form>
       </div>
