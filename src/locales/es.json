@@ -36,5 +36,8 @@
   "phone_number_info": "Idealmente un celular",
   "email_example": "mipanaderia@gmail.com",
   "buy_from_home": "Compra y vende desde tu casa, registrate ahora",
-  "buy_from_home2": "Navegá a través de los comercios o crea el tuyo. Agrega productos a tu changuito, hace tu pedido y recibilo en la puerta de tu casa."
+  "buy_from_home2": "Navegá a través de los comercios o crea el tuyo. Agrega productos a tu changuito, hace tu pedido y recibilo en la puerta de tu casa.",
+  "add-to-cart": "Agregar al carrito",
+  "brand": "Marca",
+  "stock": "Stock"
 }

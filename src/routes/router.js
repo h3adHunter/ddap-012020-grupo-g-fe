@@ -35,6 +35,11 @@ const routes = [
     name: 'Shop Detail',
     component: () => import('../pages/ShopDetail.vue')
   },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('../pages/Cart.vue')
+  }
 ]
 
 const router = new VueRouter({
@@ -45,8 +50,10 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/', '/about', '/shops', '/login', '/register']
-  const authRequired = !publicPages.includes(to.path)
+  const publicPages = ['/', '/about', '/shops', '/shops/', '/login', '/register']
+  const authRequired = publicPages.reduce( (authReq, page) => { 
+    return authReq && !to.path.includes(page)
+  }, true)
   const tryingToLogin = to.path === '/login';
   const tryingToRegister = to.path === '/register';
   const loggedIn = localStorage.getItem('user')

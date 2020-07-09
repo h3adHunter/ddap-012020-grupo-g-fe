@@ -84,7 +84,6 @@ export default {
       .then(
         shops => {
           this.shops = shops
-          console.log(shops)
         },
         error => {
           this.$store.dispatch('alert/error', error, { root: true });
@@ -98,7 +97,6 @@ export default {
   },
   methods: { 
     handleShopDetail(shop) {
-      console.log(shop)
       this.$router.push({ path: `/shops/${shop._id}` })
     }
   }
