@@ -43,14 +43,14 @@ function getById(shopId) {
 }
 
 
-function add(shopPayload) {
+function add(productPayload) {
 	const requestOptions = {
 		method: 'POST',
 		headers: { ...authHeader(), 'Content-Type': 'application/json' },
-		body: JSON.stringify(shopPayload)
+		body: JSON.stringify(productPayload)
 	};
 
-	return fetch(`${API_URL}/shops/add`, requestOptions).then(handleResponse);
+	return fetch(`${API_URL}/products/add`, requestOptions).then(handleResponse);
 }
 
 function update(shop_id, shop) {
