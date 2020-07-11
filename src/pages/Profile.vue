@@ -158,7 +158,7 @@
                     autocomplete="off">
                   </b-form-input>
                 </b-form-group>
-                
+
                 <b-form-group
                   :label="$t('shop_address')"
                   label-for="shopAddress"
@@ -173,7 +173,7 @@
                     :placeholder="$t('address_example')" 
                     autocomplete="off">
                   </b-form-input>
-                </b-form-group>
+                </b-form-group>  
 
                 <b-button 
                   id="update-button" 
@@ -184,7 +184,31 @@
             </b-tab>
             <b-tab 
               :title="$t('time_schedule')"
-              :title-link-class="linkClass(1)">
+              :title-link-class="linkClass(1)"> 
+              <b-form  data-vv-scope="shopForm" id="shopForm" @submit.prevent="handleUpdateShop">
+                <b-form-group
+                  :label="$t('time_schedule')"
+                  label-for="timeSchedule"
+                  :invalid-feedback="errors.first('timeSchedule')"
+                  :state="!submitted && errors.has('timeSchedule')">
+                  <b-form-input 
+                    id="timeSchedule"
+                    name="timeSchedule" 
+                    type="text" 
+                    v-model="form.shop.timeSchedule"
+                    :placeholder="$t('shop_url_example')" 
+                    autocomplete="off">
+                  </b-form-input>
+                </b-form-group>
+
+                <b-form-timepicker v-model="form.shop.timeSchedule" locale="en">
+                </b-form-timepicker>
+                <b-button 
+                  id="update-button" 
+                  type="submit">
+                  {{$t('save')}}
+                </b-button>
+              </b-form>
 
             </b-tab>
             <b-tab 
@@ -197,9 +221,193 @@
               :title-link-class="linkClass(3)">
               
             </b-tab>
+            <b-tab 
+              :title="$t('extras')"
+              :title-link-class="linkClass(1)">
+              <b-form  data-vv-scope="shopForm" id="shopForm" @submit.prevent="handleUpdateShop">
+                <b-form-group
+                  :label="$t('shop_pic_url')"
+                  label-for="picUrl"
+                  :invalid-feedback="errors.first('picUrl')"
+                  :state="!submitted && errors.has('picUrl')">
+                  <b-form-input 
+                    id="picUrl"
+                    name="picUrl" 
+                    type="text" 
+                    v-model="form.shop.picUrl"
+                    :placeholder="$t('shop_url_example')" 
+                    autocomplete="off">
+                  </b-form-input>
+                </b-form-group>
+
+                <b-form-group
+                  :label="$t('shop_desc')"
+                  label-for="desc"
+                  :invalid-feedback="errors.first('desc')"
+                  :state="!submitted && errors.has('desc')">
+                  <b-form-input 
+                    id="desc"
+                    name="desc" 
+                    type="text" 
+                    v-model="form.shop.desc"
+                    :placeholder="$t('shop_desc_example')" 
+                    autocomplete="off">
+                  </b-form-input>
+                </b-form-group>
+
+                <b-button 
+                  id="update-button" 
+                  type="submit">
+                  {{$t('save')}}
+                </b-button>
+              </b-form>
+            </b-tab>
+
+            <b-tab 
+              :title="$t('products')"
+              :title-link-class="linkClass(2)">
+              <b-button v-b-modal.addProductModal>{{$t('add_product')}}</b-button>
+
+                <b-modal id="addProductModal"
+                 :title="$t('add_product')"
+                 @ok="handleOk">
+                  <b-form  data-vv-scope="addProductForm" id="addProductForm" @submit.prevent="handleAddProduct">
+                    <b-form-group
+                      :label="$t('product_name')"
+                      label-for="productName"
+                      :invalid-feedback="errors.first('NombreProducto')"
+                      :state="!submitted && errors.has('NombreProducto')">
+                      <b-form-input 
+                        id="productName"
+                        name="NombreProducto" 
+                        type="text" 
+                        v-model="form.addProduct.name"
+                        v-validate="'required'"
+                        autocomplete="off">
+                      </b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      :label="$t('product_brand')"
+                      label-for="productBrand"
+                      :invalid-feedback="errors.first('MarcaProducto')"
+                      :state="!submitted && errors.has('MarcaProducto')">
+                      <b-form-input 
+                        id="productBrand" 
+                        name="MarcaProducto"
+                        type="text" 
+                        v-model="form.addProduct.brand" 
+                        v-validate="'required'"
+                        autocomplete="off">
+                      </b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      :label="$t('product_stock')"
+                      label-for="productStock"
+                      :invalid-feedback="errors.first('StockProducto')"
+                      :state="!submitted && errors.has('StockProducto')">
+                      <b-form-input 
+                        id="productStock" 
+                        name="StockProducto"
+                        type="text" 
+                        v-model="form.addProduct.stock" 
+                        v-validate="{ regex: '^([0-9]+)$' }"
+                        autocomplete="off">
+                      </b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      :label="$t('product_price')"
+                      label-for="productPrice"
+                      :invalid-feedback="errors.first('PrecioProducto')"
+                      :state="!submitted && errors.has('PrecioProducto')">
+                      <b-form-input 
+                        id="productPrice" 
+                        name="PrecioProducto"
+                        type="text" 
+                        v-model="form.addProduct.price" 
+                        v-validate="{ regex: '^([0-9]+)$' }"
+                        autocomplete="off">
+                      </b-form-input>
+                    </b-form-group>                    
+
+                    <b-form-group
+                      :label="$t('product_pic_url')"
+                      label-for="productPicUrl"
+                      :invalid-feedback="errors.first('ImagenProducto')"
+                      :state="!submitted && errors.has('ImagenProducto')">
+                      <b-form-input 
+                        id="productPicUrl" 
+                        name="ImagenProducto"
+                        type="text" 
+                        v-model="form.addProduct.picUrl" 
+                        v-validate="'required'"
+                        autocomplete="off">
+                      </b-form-input>
+                    </b-form-group>  
+                  </b-form>
+              </b-modal>
+              <v-col
+                cols="12">
+                  
+                  <v-row 
+                  class="m-2"
+                  id="nav-scroller"
+                  ref="content"
+                  style="position:relative; height:300px; overflow-y:scroll;">
+                    <v-col
+                      v-for="(product, i) in products" 
+                      :key="i" 
+                      cols="6">
+                      <v-card
+                        class="m-1 product-card"
+                        color="#eeeeee"
+                        dark
+                        raised>
+                        <div 
+                          class="center-container">
+                          <v-avatar
+                            class="m-3"
+                            size="125px"
+                            round>
+                            <v-img :src="product.picUrl"></v-img>
+                          </v-avatar>
+                        </div>
+                        
+                        <v-card-title
+                          class="title"
+                          v-text="product.name">
+                        </v-card-title>
+        <!--                 
+                        <v-card-subtitle 
+                          class="brand"
+                          v-text="product.brand">
+                        </v-card-subtitle> -->
+                        <v-card-text>
+                          <v-row
+                            class="brand"
+                            align="center">
+                            <v-col align="start" cols="6">
+                              <div>{{product.brand}}</div>
+                            </v-col>
+                            <v-col align="end" cols="6">
+                              <v-chip
+                                :color="shop.color"
+                                text-color="#ffffff"
+                              >
+                                $ {{product.price}}
+                              </v-chip>
+                            </v-col>
+                          </v-row>
+                        </v-card-text>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+              </v-col>
+            </b-tab>
           </b-tabs>
         </b-card>
-        
       </div>
     </div>
   </b-overlay>
@@ -209,6 +417,7 @@
 import { mapState } from 'vuex'
 import { profileService } from '../services/profile.service'
 import { shopService } from '../services/shop.service'
+import { productService } from '../services/product.service'
 
 export default {
   name: "Profile",
@@ -227,10 +436,19 @@ export default {
           email: '',
           phoneNbr: '',
           address: ''
+        },
+        addProduct: {
+          name: '',
+          brand: '',
+          stock: '',
+          price: '',
+          picUrl: '',
+          product_category_id: '5ed1c6ebf024a96817940a51',
         }
       },
       profile: null,
       shop: null,
+      products: [],
       submitted: false,
       loading: false,
       tabIndex: 0
@@ -254,6 +472,10 @@ export default {
             this.form.shop.email = shop.email || null
             this.form.shop.phoneNbr = shop.phoneNbr || null
             this.form.shop.address = shop.address || null
+            this.form.shop.picUrl = shop.picUrl || null            
+            this.form.shop.desc = shop.desc || null
+            
+            this.refreshProducts()
           },
           () => {
             this.$store.dispatch('alert/warning', this.$t('no_shop_yet'), { root: true });
@@ -334,6 +556,46 @@ export default {
       } else {
         return ['border-gray bg-gray text-muted']
       }
+    },
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      debugger
+      bvModalEvt.preventDefault()
+      // Trigger submit handler
+      this.handleAddProduct()
+    },
+    handleAddProduct(){
+      this.$validator.validateAll('productForm').then(valid => {
+        if (valid) {
+          productService.add({ shop_id: this.shop._id, ...this.form.addProduct})
+            .then(
+              () => {
+                this.$store.dispatch('alert/success', this.$t('product_created'), { root: true });
+                this.$nextTick(() => {
+                  this.$bvModal.hide('addProductModal')
+                })
+                this.refreshProducts()
+              },
+              error => {
+                this.$store.dispatch('alert/error', error, { root: true });
+              }
+          )
+        } else {
+          this.$store.dispatch('alert/error', this.$t('missing_data'), { root: true });
+        }
+      })
+    },
+    refreshProducts() {
+      productService.getByShopId(this.shop._id)
+      .then(
+        products => {
+          this.products = products
+          console.log(products)
+        },
+        error => {
+          this.$store.dispatch('alert/error', error, { root: true });
+        }
+      );          
     }
 	}
 }
@@ -422,5 +684,30 @@ div#profile div#shop ::placeholder {
     max-width: 90%;
     width: 100%;
   }
+}
+.center-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.product-card {
+  color: #000000;
+}
+
+.title {
+  padding: 0px 16px;
+}
+
+.brand {
+  color: #555555 !important;
+}
+
+.stock {
+  color: #555555;
+}
+
+.price {
+  color: #000000;
 }
 </style>
