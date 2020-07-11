@@ -7,7 +7,7 @@ const state = user
     : { status: {}, user: null };
 
 const actions = {
-    login({ dispatch, commit }, { email, password }) {
+    async login({ dispatch, commit }, { email, password }) {
         commit('loginRequest', { email });
 
         userService.login(email, password)
@@ -27,7 +27,7 @@ const actions = {
         userService.logout();
         commit('logout');
     },
-    register({ dispatch, commit }, user) {
+    async register({ dispatch, commit }, user) {
         commit('registerRequest', user);
     
         userService.register(user)

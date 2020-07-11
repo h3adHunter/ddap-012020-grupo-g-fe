@@ -9,6 +9,8 @@ import { BootstrapVue, IconsPlugin, BootstrapVueIcons, NavbarPlugin } from 'boot
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import i18n from './i18n'
+import { Auth0Plugin } from "./auth"
+import { domain, clientId } from "../auth_config.json"
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -16,6 +18,19 @@ Vue.use(BootstrapVueIcons)
 Vue.use(NavbarPlugin)
 Vue.use(VeeValidate)
 Validator.localize('es', es)
+
+Vue.use(Auth0Plugin, {
+  domain,
+  clientId,
+  onRedirectCallback: appState => {
+    router.push(
+      appState && appState.targetUrl
+        ? appState.targetUrl
+        : window.location.pathname
+    );
+  }
+});
+
 
 Vue.config.productionTip = false
 

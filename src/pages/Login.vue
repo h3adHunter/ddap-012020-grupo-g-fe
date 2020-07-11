@@ -58,7 +58,11 @@
             type="submit">
             {{$t('login')}}
           </b-button>
-          
+
+          <b-button 
+           @click="login_auth0" class="login-auth0-button">
+          <strong>{{$t('login_auth0')}}</strong></b-button>
+
           <p style="margin-top: 15px; text-align: center;">
             {{$t('new_to_abastify')}}
           </p>
@@ -77,6 +81,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { userService } from '../services/user.service';
 
 export default {
   name: 'Login',
@@ -101,7 +106,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('account', ['login']),
+    ...mapActions('account', ['login', 'register']),
     handleLogin() {
       this.submitted = true
       this.loading = true
@@ -114,6 +119,39 @@ export default {
     },
     goToRegister() {
       this.$router.push('/register')
+    },
+    async login_auth0() {
+      await this.$auth.loginWithPopup();
+      let auth0_user = this.$auth.user
+      console.log(this.$auth.user)
+      this.submitted = true
+      this.loading = true
+      userService.check_availability(auth0_user.email)
+      .then(() => {
+        this.register({
+          firstName: auth0_user.name,
+          lastName: auth0_user.family_name,
+          email: auth0_user.email,
+          password: auth0_user.sub,
+          repeatedPassword: auth0_user.sub
+        })
+        setTimeout( () =>{
+          this.login({
+            email: auth0_user.email,
+            password: auth0_user.sub
+          })
+        }, 5000)
+      })
+      .catch(() => {
+        this.login({
+          email: auth0_user.email,
+          password: auth0_user.sub
+        })  
+      })
+      .finally(() => {
+        this.loading = false
+      })
+      //this.$router.push('/')
     }
   }
 }
@@ -181,6 +219,21 @@ div#login div#form button#login-button {
 }
 
 div#login div#form button:hover#login-button {
+  background-color: #cccccc;
+  color: #000000;
+}
+
+.login-auth0-button {
+  background-color: #ffffff;
+  color: #333333;
+  cursor: pointer;
+  border: none;
+  padding: 10px;
+  transition: background-color 0.2s ease-in-out;
+  width: 100%;
+}
+
+.login-auth0-button:hover {
   background-color: #cccccc;
   color: #000000;
 }

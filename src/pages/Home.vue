@@ -16,7 +16,7 @@ export default {
 
     }
   },
-  created() {
+  async created() {
     if (this.account.status.loggedIn) {
       setTimeout( function() { 
         profileService.getById(this.account.user._id)
