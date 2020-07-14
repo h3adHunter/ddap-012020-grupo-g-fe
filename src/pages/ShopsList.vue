@@ -16,53 +16,54 @@
           
         </v-card>
       </v-col>
-      
-      <v-col
-        v-for="(shop, index) in shops"
-        :key="index"
-        cols="12">
-        <v-card
-          :color="shop.color"
-          dark
-          raised
-          @click="handleShopDetail(shop)">
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <div style="width: 100%;">
-              <v-card-title
-                class="headline"
-                v-text="shop.name">
-              </v-card-title>
+      <v-row>
+        <v-col
+          v-for="(shop, index) in shops"
+          :key="index"
+          cols="12">
+          <v-card
+            :color="shop.color"
+            dark
+            raised
+            @click="handleShopDetail(shop)">
+            <div class="d-flex flex-no-wrap justify-space-between">
+              <div style="width: 100%;">
+                <v-card-title
+                  class="headline"
+                  v-text="shop.name">
+                </v-card-title>
 
-              <v-card-subtitle v-text="shop.shop_category"></v-card-subtitle>
-              <v-card-text>
-                <v-row
-                  align="center"
-                  class="mx-0"
-                >
-                  <div class="mr-2">{{shop.address}}</div>
-                  <v-rating
-                    :value="shop.rating"
-                    color="#fcbe12"
-                    dense
-                    half-increments
-                    readonly
-                    size="14"
-                  ></v-rating>
-                </v-row>
+                <v-card-subtitle v-text="shop.shop_category"></v-card-subtitle>
+                <v-card-text>
+                  <v-row
+                    align="center"
+                    class="mx-0"
+                  >
+                    <div class="mr-2">{{shop.address}}</div>
+                    <v-rating
+                      :value="shop.rating"
+                      color="#fcbe12"
+                      dense
+                      half-increments
+                      readonly
+                      size="14"
+                    ></v-rating>
+                  </v-row>
 
-                <div>{{shop.desc}}</div>
-              </v-card-text>
+                  <div>{{shop.desc}}</div>
+                </v-card-text>
+              </div>
+
+              <v-avatar
+                class="m-3"
+                size="125"
+                tile>
+                <v-img :src="shop.picUrl"></v-img>
+              </v-avatar>
             </div>
-
-            <v-avatar
-              class="m-3"
-              size="125"
-              tile>
-              <v-img :src="shop.picUrl"></v-img>
-            </v-avatar>
-          </div>
-        </v-card>
-      </v-col>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-row>
   </v-container>
 </template>

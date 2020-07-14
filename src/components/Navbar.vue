@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar class="bd-navbar" type="dark" toggleable="lg">
+    <b-navbar class="bd-navbar" type="dark" toggleable="sm">
       <b-navbar-brand to="/">
         <img src="../assets/logo.png" width="150px" />
       </b-navbar-brand>

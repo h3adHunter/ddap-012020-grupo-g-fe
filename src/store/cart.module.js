@@ -1,11 +1,11 @@
 const state = {
-    products: []
+    shops: null
 }
 
 const actions = {
-    addProduct({ dispatch, commit }, product) {
+    addProduct({ dispatch, commit }, { shop, product }) {
         if (product.quantity <= product.stock) {
-            commit('addCart', product)
+            commit('addCart', { shop, product })
             dispatch('alert/success', 'Producto agregado al carrito correctamente.', { root: true });
         } else {
             dispatch('alert/error', 'Stock insuficiente.', { root: true });
@@ -14,8 +14,14 @@ const actions = {
 };
 
 const mutations = {
-    addCart(state, product) {
-        state.products.push(product)
+    addCart(state, { shop, product }) {
+        const shopAlreadyAdded = state.shops ? state.shops.find( cartShop => cartShop._id === shop._id) : false
+        if (shopAlreadyAdded) {
+            shopAlreadyAdded.products.push(product)
+        } else {
+            shop.products = [product]
+            state.shops ? state.shops.push(shop) : state.shops = [shop]
+        }
     }
 };
 
