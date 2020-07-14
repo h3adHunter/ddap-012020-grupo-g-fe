@@ -10,7 +10,8 @@ if (process.env.NODE_ENV === "development") {
 export const userService = {
   login,
   logout,
-  register
+  register,
+  check_availability
 }
 
 function login(email, password) {
@@ -46,4 +47,18 @@ function register(user) {
   }
 
   return fetch(`${API_URL}/users/register`, requestOptions).then(handleResponse)
+}
+
+function check_availability(email){
+  debugger
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({})
+  }
+
+  return fetch(`${API_URL}/users/check_availability/${email}`, requestOptions)
+  .then((response) => {
+    return new Promise.resolve(response)
+  })
 }

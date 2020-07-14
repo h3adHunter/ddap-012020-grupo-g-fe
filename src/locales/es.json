@@ -49,6 +49,7 @@
   "address_example": "Av.Mitre 1234",
   "shop_name_example": "Mi panadería",
   "phone_number_info": "Idealmente un celular",
+  "login_auth0": "Ingresar con Google",
   "email_example": "mipanaderia@gmail.com",
   "buy_from_home": "Compra y vende desde tu casa, registrate ahora",
   "buy_from_home2": "Navegá a través de los comercios o crea el tuyo. Agrega productos a tu changuito, hace tu pedido y recibilo en la puerta de tu casa.",
