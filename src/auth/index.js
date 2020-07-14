@@ -2,13 +2,7 @@ import Vue from "vue";
 import createAuth0Client from "@auth0/auth0-spa-js";
 
 /** Define a default action to perform after authentication */
-const DEFAULT_REDIRECT_CALLBACK = (appState) => {
-  console.log(appState)
-  console.log(this.$auth.user)
-  console.log(this.instance)
-  debugger
-  //window.history.replaceState({}, document.title, window.location.pathname);
-}
+const DEFAULT_REDIRECT_CALLBACK = () => {}
 let instance;
 
 /** Returns the current instance of the SDK */
@@ -43,7 +37,6 @@ export const useAuth0 = ({
           await this.auth0Client.loginWithPopup(o);
         } catch (e) {
           // eslint-disable-next-line
-          console.error(e);
         } finally {
           this.popupOpen = false;
         }
@@ -102,8 +95,6 @@ export const useAuth0 = ({
           window.location.search.includes("state=")
         ) {
           // handle the redirect and retrieve tokens
-          console.log(this.auth0Client)
-          debugger
           const { appState } = await this.auth0Client.handleRedirectCallback();
 
           // Notify subscribers that the redirect callback has happened, passing the appState

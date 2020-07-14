@@ -559,7 +559,6 @@ export default {
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
-      debugger
       bvModalEvt.preventDefault()
       // Trigger submit handler
       this.handleAddProduct()
@@ -590,7 +589,6 @@ export default {
       .then(
         products => {
           this.products = products
-          console.log(products)
         },
         error => {
           this.$store.dispatch('alert/error', error, { root: true });

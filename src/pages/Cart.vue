@@ -194,13 +194,7 @@ export default {
       loading: false
     }
   },
-  created() {
-    if (this.cart.shops) {
-      console.log("Tiene productos en el carrito")
-    } else {
-      console.log("No tiene productos en el carrito")
-    }
-  },
+  created() {},
   computed: {
     ...mapState({
       cart: state => state.cart,

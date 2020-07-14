@@ -123,7 +123,6 @@ export default {
     async login_auth0() {
       await this.$auth.loginWithPopup();
       let auth0_user = this.$auth.user
-      console.log(this.$auth.user)
       this.submitted = true
       this.loading = true
       userService.check_availability(auth0_user.email)
