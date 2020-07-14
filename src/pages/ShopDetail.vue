@@ -57,7 +57,7 @@
             <v-col
               v-for="(product, i) in products" 
               :key="i" 
-              cols="3">
+              cols="6">
               <v-card
                 class="m-1 product-card"
                 color="#eeeeee"
@@ -108,7 +108,7 @@
                       <b-form-input v-model="product.quantity" type="number"></b-form-input>
                     </v-col>
                     <v-col align="end" cols="2">
-                      <b-button :disabled="product.quantity === '0'" variant="info" @click="addProduct(product)">
+                      <b-button :disabled="product.quantity === '0'" variant="info" @click="addProduct({ shop, product })">
                         <v-icon color="#ffffff">{{ icons.addCart }}</v-icon>
                       </b-button>
                     </v-col>
@@ -173,9 +173,6 @@ export default {
   },
   methods: { 
     ...mapActions('cart', ['addProduct']),
-    handleAddToCart(product) {
-      console.log(product)
-    }
   }
 }
 </script>
