@@ -50,7 +50,6 @@ function register(user) {
 }
 
 function check_availability(email){
-  debugger
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
