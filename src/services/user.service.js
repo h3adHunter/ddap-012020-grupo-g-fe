@@ -52,12 +52,14 @@ function register(user) {
 function check_availability(email){
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({})
+    headers: { 'Content-Type': 'application/json' }
   }
 
   return fetch(`${API_URL}/users/check_availability/${email}`, requestOptions)
-  .then((response) => {
-    return new Promise.resolve(response)
-  })
+    .then((response) => {
+      return Promise.resolve(response)
+    })
+    .catch( (error) => {
+      return Promise.reject(error)
+    })
 }
