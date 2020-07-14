@@ -1,27 +1,21 @@
 ---------------------------------------------------------------------
-TAG v1.0
+TAG v1.2
 ---------------------------------------------------------------------
 NEW FEATURES:
 [Backend]
-  * Modelos de:
-    - User
-    - Geo
-    - Profile
-    - Profile Settings
-    - Shop
-    - Shop Category
-    - Shop Promotion
-    - Product
-    - Product Category
+  * Services:
     - Order
+  * Service Logger
 [Frontend]
-  * Pantalla de Home con Mapa
+  * Carrito de compra
+  * Añadir productos manualmente o a través de CSV
+  * Ingresar con Google (Auth0)
 
 NOTES:
-[Backend]
-  * Todavía no definimos la parte de los turnos, por el momento el modelo Shop tendria
-    un array de horarios del tipo String ej "Lunes: 8:00 a 18:00"
+[Frontend/Backend]
+  * Gestión de entrega a domicilio pendiente
+  * Tests de arquitectura pendientes
 
 KNOWN ISSUES:
-[Backend]
-  * Unit tests sin Factory
+[Frontend]
+  * Servicio addMultiple de productos tiene un conflicto con CORS.
